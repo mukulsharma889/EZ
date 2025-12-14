@@ -1,0 +1,95 @@
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
+  <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%">
+    <div class="card-body">
+      <div class="text-center mb-4">
+        <h3 class="fw-bold">
+          {{ isLoginMode ? "Welcome Back" : "Create Account" }}
+        </h3>
+        <p class="text-muted">
+          {{
+            isLoginMode
+              ? "Login to your dashboard"
+              : "Join our learning community"
+          }}
+        </p>
+      </div>
+
+      <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="role" class="form-label">I am a...</label>
+          <select id="role" class="form-select" formControlName="role">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
+
+        <div class="mb-3" *ngIf="!isLoginMode">
+          <label for="name" class="form-label">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            formControlName="name"
+            placeholder="John Doe"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            [class.is-invalid]="
+              authForm.get('email')?.touched && authForm.get('email')?.invalid
+            "
+            formControlName="email"
+            placeholder="name@example.com"
+          />
+          <div class="invalid-feedback">Please enter a valid email.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            [class.is-invalid]="
+              authForm.get('password')?.touched &&
+              authForm.get('password')?.invalid
+            "
+            formControlName="password"
+            placeholder="••••••••"
+          />
+          <div class="invalid-feedback">
+            Password must be at least 6 characters.
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary btn-lg">
+            {{ isLoginMode ? "Sign In" : "Sign Up" }}
+          </button>
+        </div>
+      </form>
+
+      <div class="text-center mt-3">
+        <p class="small">
+          {{
+            isLoginMode ? "Don't have an account?" : "Already have an account?"
+          }}
+          <a
+            href="javascript:void(0)"
+            class="text-decoration-none fw-bold"
+            (click)="toggleMode()"
+          >
+            {{ isLoginMode ? "Sign Up" : "Login" }}
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
